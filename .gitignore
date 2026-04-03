@@ -1,0 +1,16 @@
+# Bases de datos generadas
+*.db
+*.sqlite
+data/*.db
+
+# Logs
+logs/
+*.log
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
