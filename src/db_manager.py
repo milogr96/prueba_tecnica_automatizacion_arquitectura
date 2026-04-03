@@ -22,7 +22,7 @@ def registrar_solicitud(id_pedido, estado):
     c = conn.cursor()
     timestamp = datetime.now().isoformat()
     hash_id = hashlib.md5(id_pedido.encode()).hexdigest()
-    c.execute("INSERT INTO solicitudes (id_pedido, timestamp, estado, damage_type,hash_id) VALUES (?,?,?,?,?)",
+    c.execute("INSERT INTO solicitudes (id_pedido, timestamp, estado,hash_id) VALUES (?,?,?,?)",
               (id_pedido, timestamp,damage_type ,estado, hash_id))
     conn.commit()
     conn.close()
