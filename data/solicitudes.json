@@ -1,0 +1,26 @@
+[
+    {
+        "id_pedido": "OP260402-12345678",
+        "foto_path": "foto1.jpg"
+    },
+    {
+        "id_pedido": "OP260402-87654321",
+        "foto_path": "foto2.jpg"
+    },
+    {
+        "id_pedido": "OP260402-11111111",
+        "foto_path": "foto3.jpg"
+    },
+    {
+        "id_pedido": "OP260402-99999999",
+        "foto_path": "foto4.jpg"
+    },
+    {
+        "id_pedido": "INVALIDO",
+        "foto_path": "foto5.jpg"
+    },
+    {
+        "id_pedido": "OP260402-87654321",
+        "foto_path": "foto2_duplicado.jpg"
+    }
+]
