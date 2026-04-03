@@ -1,0 +1,28 @@
+flowchart TD
+    A[Correo del cliente] --> B{Validador de ID}
+    B -->|ID inválido o vacío| C[Responder: ID incorrecto + Log error]
+    B -->|ID válido| D[Deduplicador: buscar en SQLite últimos 30 min]
+    D -->|Mismo ID en ventana de 2h| E[Responder: ya en proceso + Log duplicado]
+    D -->|Sin duplicado| F[Consultar BD de pedidos: precio e historial]
+    F -->|Error BD o timeout| G[Reintentar hasta 3 veces]
+    G -->|Éxito| H{¿Monto > 200 USD?}
+    G -->|Fallo persistente| I[Alerta a TI + guardar en cola local]
+    H -->|No (≤200)| J[Generar código de retorno automático]
+    H -->|Sí (>200)| K[Crear solicitud pendiente de aprobación]
+    K --> L[Notificar a supervisor via Slack/Teams]
+    L --> M{¿Respuesta en 24h?}
+    M -->|Sí| N{¿Aprobada?}
+    N -->|Sí| O[Generar código de retorno]
+    N -->|No| P[Notificar cliente rechazo]
+    M -->|No respuesta| Q[Escalar a supervisor backup + reiniciar timer]
+    Q -->|48h sin respuesta| R[Aprobar automáticamente + alerta a operaciones]
+    R --> O
+    J --> S[Actualizar estado en SQLite: 'aprobado']
+    O --> S
+    P --> T[Actualizar estado: 'rechazado']
+    S --> U[Notificar al cliente (email/consola)]
+    T --> U
+    I --> V[Registrar en log de errores]
+    C --> V
+    E --> V
+    U --> V[Fin - Trazabilidad completa]
