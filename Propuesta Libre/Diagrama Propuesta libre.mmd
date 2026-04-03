@@ -1,0 +1,23 @@
+flowchart TD
+    A[Cliente] --> B{¿Qué canal usa?}
+    B -->|WhatsApp| C[WhatsApp Business API]
+    B -->|Portal Web| D[Sitio web e-Ship]
+
+    C --> E{Sensor de saturación}
+    E -->|Alta congestión| F[Mensaje automático: redirige a web]
+    F --> D
+    E -->|Normal| G[Mostrar emojis de sentimiento 😠😐😊]
+    
+    D --> H[Mostrar emojis de sentimiento]
+    H --> I[Cliente selecciona emoji]
+    G --> I
+    
+    I --> J[Ingresa ID del pedido + foto]
+    J --> K[Backend: validación + deduplicación + umbral $200]
+    K --> L{¿Monto > $200?}
+    L -->|No| M[Aprobación automática]
+    L -->|Sí| N[Notificar a supervisor vía Slack/Teams]
+    N --> O[Supervisor aprueba/rechaza]
+    O --> P[Notificar resultado al cliente]
+    M --> P
+    P --> Q[Registro en BD + logs]
